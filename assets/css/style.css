@@ -1,7 +1,11 @@
+
 /*  GOOGLE FONTS RALEWAY  */
 /* font-family: 'Raleway', sans-serif; */
 
 .jumbotron {
+
+#jumbotron {
+
 	margin: 0 auto;
 	margin-top: 30px;
 	margin-bottom: 30px;
@@ -16,13 +20,14 @@
 #container, #disc-container {
 	margin: 0 auto;
 	width: 960px;
+	min-height: 100px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
 #fun-facts-container, #spotify-container {
 	text-align: center;
-	height: 200px;
+	height: 350px;
 	border: 2px solid black;
 	border-radius: 4px;
 }
@@ -41,4 +46,8 @@ input {
 #logo {
 	height: 75px;
 	margin-bottom: 10px;
+}
+
+#fun-facts, #spotify {
+	padding: 10px;
 }
