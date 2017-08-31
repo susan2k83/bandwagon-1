@@ -34,3 +34,8 @@
 input {
 	margin-left: 5px;
 }
+
+#logo {
+	height: 75px;
+	margin-bottom: 10px;
+}
