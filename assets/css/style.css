@@ -1,0 +1,36 @@
+.jumbotron {
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	width: 960px;
+	text-align: center;
+	border: 2px solid black;
+	border-radius: 4px;
+	background-color: white;
+	color: black;
+}
+
+#container, #disc-container {
+	margin: 0 auto;
+	width: 960px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#fun-facts-container, #spotify-container {
+	text-align: center;
+	height: 200px;
+	border: 2px solid black;
+	border-radius: 4px;
+}
+
+#disc-container {
+	margin-top: 30px;
+	border: 2px solid black;
+	border-radius: 4px;
+	padding: 10px;
+}
+
+input {
+	margin-left: 5px;
+}
