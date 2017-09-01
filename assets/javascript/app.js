@@ -1,26 +1,88 @@
+
 // GLOBAL VARIABLES - WIKIPEDIA
+
+// constants
+var maxButtonDisplay = 5;
+var maxFactLength = 215;
+var factIntervalLength = 5000;
+
+
 var bandName;
+var bandNameForSearch;
+var soundCloudClientID = "client_id=8538a1744a7fdaa59981232897501e04"
 var queryURL;
 var results;
-var facts = [];
+var bands = [];
+var bandFacts = [];
+var bandAlbums = [];
+var tracks = [];
+
+var factInterval;
 var factIndex;
+
 
 // START - WIKIPEDIA API & AJAX CALL //
 $(document).on("click", "#add-band", function(event) {
 
+buttonsAdded = 0;
+
+// click listener for adding a band
+$("#add-band").on("click", function(event) {
+
+
     event.preventDefault();
 
-    bandName = $("#band-name").val();
+    // ignore duplicates & empty strings
+    if(!bands.includes($("#band-name").val()) && $("#band-name").val() != "") {
 
+        bandName = $("#band-name").val();
+    
+        bands.splice(buttonsAdded % maxButtonDisplay, 1, bandName);
+
+        writeButtons();
+        buttonsAdded++;
+    }
+    // empty input field
+    $("#band-name").val("");
+});
+
+/*
+ * writeButtons()
+ * iterate through the added bands and render buttons to the #spotify div.
+ */
+function writeButtons() {
+
+    $("#nav-container").html("");
+
+    for(var i = 0; i < bands.length; i++) {
+        newBtn = $("<button>");
+        newBtn.attr("id", "button-" + i);
+        newBtn.addClass("button-primary band-btn");
+        newBtn.text(bands[i]);
+        $("#nav-container").append(newBtn);
+    }
+}
+
+// event handler for band button click 
+$("#nav-container").on("click", ".band-btn", function() {
+
+    bandName = $(this).text();
+
+    // handle spaces
     if(bandName.includes(" ")) {
-
-        bandName = bandName.replace(/ /g, "+");
+        bandNameForSearch = bandName.replace(/ /g, "+");
     }
 
-    queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" +
-                bandName + "&limit=15&format=json";
+    else {
+        bandNameForSearch = bandName;
+    }
 
+    bandNameForSearch = bandNameForSearch + "+music";
+
+    queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" +
+                bandNameForSearch + "&limit=15&format=json";
     $.ajax({
+
         method: "GET",
         url: queryURL,
         jsonp: "callback",
@@ -28,22 +90,46 @@ $(document).on("click", "#add-band", function(event) {
         xhrFields: {
             withCredentials: true
         }
+
     }).done(function(response) {
 
         console.log(response);
 
         for (var i = 0; i < response[2].length; i++) {
 
-            facts[i] = response[2][i];
-            // $("#disc-container").append("<p>" + facts[i] + "</p>");
+            bandFacts[i] = response[2][i];
         }
+
+        // display the first factoid
+        getFact();
     });
 
-    // display random fact every 5 seconds        
-    var factInterval = setInterval(function() {
-        factIndex = Math.floor(Math.random() * facts.length)  
-        $("#fun-facts").html("<p>" + facts[factIndex] + "</p>");
-    }, 5000);
+    // now get discography
+    queryURL = "http://api.musicgraph.com/api/v2/album/search?api_key=30c6c15e149e566fdaa15b1d92b217f7&artist_name=" +
+                 bandNameForSearch;
+    $.ajax({
+
+        method: "GET",
+        url: queryURL,
+
+    }).done(function(response) {
+
+        console.log(response);
+
+        for (var i = 0; i < response.data.length; i++) {
+
+            var tempAlbum = {title: response.data[i].title, year: response.data[i].release_year};
+
+            bandAlbums.push(tempAlbum);
+        }
+
+        displayDiscography();
+    });
+
+    // play a song
+    queryURL = "https://api.soundcloud.com/tracks/?q=" + bandNameForSearch +
+     "&" + soundCloudClientID;
+
 
     // factIndex = Math.floor(Math.random() * facts.length)  
     // $("#fun-facts").html("<p>" + facts[factIndex] + "</p>");
@@ -51,6 +137,77 @@ $(document).on("click", "#add-band", function(event) {
 // END - WIKIPEDIA API & AJAX CALL //
 
 // SPOTIFY API & AJAX CALL
-$(document).ready(function () {
-    var queryURL = 
+// $(document).ready(function () {
+    // var queryURL = 
+// });
+
+      $.ajax({
+
+        method: "GET",
+        url: queryURL,
+
+    }).done(function(response) {
+
+        console.log(response);
+
+        for (var i = 0; i < response.length; i++) {
+
+            tracks[i] = response[i];
+        }
+
+        playTrack();
+    });  
+
+    // stop current interval
+    clearInterval(factInterval);
+
+    // display random fact on an interval        
+    factInterval = setInterval(getFact, factIntervalLength);
 });
+
+function getFact() {
+
+    factIndex = Math.floor(Math.random() * bandFacts.length);
+
+    // check to be sure that fact is not empty...
+    while(bandFacts[factIndex] === "" || bandFacts[factIndex].length > maxFactLength) {
+
+    // ...if it is, get another one
+    factIndex = Math.floor(Math.random() * bandFacts.length);
+    }
+
+    $("#fun-facts").html("<p>" + bandFacts[factIndex] + "</p>");
+}
+
+function playTrack() {
+
+    $("#audioSource").attr("src", tracks[1].stream_url + "?" + soundCloudClientID);
+
+    var audioController = document.querySelector("#audioController");
+
+    audioController.load();
+}
+
+function displayDiscography() {
+
+    $("#disc-container").html("");
+
+    for(var i = 0; i < tracks.length; i++) {
+
+        var newAlbumButton = $("<button>");
+        var newAlbumImage = $("<img>");
+
+        newAlbumButton.attr("id", "album-button-" + i);
+        newAlbumButton.addClass("button-primary album-button");
+
+        newAlbumImage.attr("id", "album-image-" + i);
+        newAlbumImage.addClass("album-image");
+
+        newAlbumImage.attr("src", tracks[i].artwork_url);
+        newAlbumButton.text(tracks[i].title);
+
+        $("#disc-container").append(newAlbumImage);
+        $("#disc-container").append(newAlbumButton);
+    }
+}
+

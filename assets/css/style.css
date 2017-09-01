@@ -1,3 +1,10 @@
+body {
+	background-color: #eeeeee;
+}
+
+#header {
+	margin-bottom: 0;
+}
 
 /*  GOOGLE FONTS RALEWAY  */
 /* font-family: 'Raleway', sans-serif; */
@@ -5,39 +12,48 @@
 #jumbotron {
 	margin: 0 auto;
 	margin-top: 30px;
-	margin-bottom: 30px;
+	margin-bottom: 0px;
+	padding: 20px 0;
 	width: 960px;
+	max-width: 95%;
 	text-align: center;
 	border: 2px solid black;
-	border-radius: 4px;
+	border-radius: 20px;
 	background-color: white;
 	color: black;
 }
 
-#container, #disc-container {
+form {
+	margin-bottom: 0px;
+}
+
+#input-div {
 	margin: 0 auto;
-	width: 960px;
-	min-height: 100px;
-	padding-left: 0px;
-	padding-right: 0px;
-}
-
-#fun-facts-container, #spotify-container {
+	width: 340px;
+	height: 36px;
 	text-align: center;
-	height: 350px;
-	border: 2px solid black;
-	border-radius: 4px;
 }
 
-#disc-container {
-	margin-top: 30px;
-	border: 2px solid black;
-	border-radius: 4px;
-	padding: 10px;
+#label-band {
+	float: left;
+	padding-top: 5px;
+	font-size: 16px;
 }
 
 input {
-	margin-left: 5px;
+	float: right;
+	margin-bottom: 0px;
+	height: 36px;
+	width: 187px;
+}
+
+#add-band {
+	margin: 0 auto;
+	margin-top: 10px;
+	display: block;
+	clear: both;
+	width: 340px;
+	margin-bottom: 0;
 }
 
 #logo {
@@ -45,6 +61,83 @@ input {
 	margin-bottom: 10px;
 }
 
+.button {
+	margin-bottom: 0px;
+}
+
+.button-primary.band-btn {
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+	max-width: 187px;
+	width: 20%;
+}
+
+#nav {
+	height: 50px;
+}
+
+#nav-container {
+	margin: 0 auto;
+	width: 960px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	height: 38px;
+}
+
+#fun-facts-header {
+	margin-bottom: 0;
+}
+
+#fun-facts-container {
+	text-align: center;
+	font-size: 12px;
+	height: 150px;
+	border: 2px solid black;
+	border-radius: 100px;
+	background-color: white;
+}
+
+#med-bubble {
+	width: 65px;
+	height: 65px;
+	border: 2px solid black;
+	border-radius: 45px;
+	background-color: white;
+}
+
+#sm-bubble {
+	width: 35px;
+	height: 35px;
+	border: 2px solid black;
+	border-radius: 25px;
+	background-color: white;
+}
+
+#spotify-container {
+	text-align: center;
+	font-size: 12px;
+	height: 250px;
+	border: 2px solid black;
+	border-radius: 20px;
+	background-color: white;
+}
+
 #fun-facts, #spotify {
 	padding: 10px;
+}
+
+#disc-container {
+	margin: 30px 0;
+	min-height: 100px;
+	padding: 10px;
+	border: 2px solid black;
+	border-radius: 20px;
+	background-color: white;
+}
+
+.button-primary.album-button {
+	display: block;
+	clear: both;
+	margin: 0 auto;
+	margin-bottom: 5px;
 }
