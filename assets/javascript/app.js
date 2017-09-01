@@ -1,10 +1,11 @@
+// GLOBAL VARIABLES - WIKIPEDIA
 var bandName;
 var queryURL;
 var results;
 var facts = [];
 var factIndex;
 
-
+// START - WIKIPEDIA API & AJAX CALL //
 $(document).on("click", "#add-band", function(event) {
 
     event.preventDefault();
@@ -46,4 +47,10 @@ $(document).on("click", "#add-band", function(event) {
 
     // factIndex = Math.floor(Math.random() * facts.length)  
     // $("#fun-facts").html("<p>" + facts[factIndex] + "</p>");
+});
+// END - WIKIPEDIA API & AJAX CALL //
+
+// SPOTIFY API & AJAX CALL
+$(document).ready(function () {
+    var queryURL = 
 });
