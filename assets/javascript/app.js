@@ -5,11 +5,13 @@ var factIntervalLength = 5000;
 
 var bandName;
 var bandNameForSearch;
+var soundCloudClientID = "client_id=8538a1744a7fdaa59981232897501e04"
 var queryURL;
 var results;
 var bands = [];
 var bandFacts = [];
 var bandAlbums = [];
+var tracks = [];
 
 var factInterval;
 var factIndex;
@@ -66,6 +68,8 @@ $("#nav-container").on("click", ".band-btn", function() {
         bandNameForSearch = bandName;
     }
 
+    bandNameForSearch = bandNameForSearch + "+music";
+
     queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" +
                 bandNameForSearch + "&limit=15&format=json";
     $.ajax({
@@ -89,9 +93,6 @@ $("#nav-container").on("click", ".band-btn", function() {
 
         // display the first factoid
         getFact();
-
-        // play a video
-        playVideo();
     });
 
     // now get discography
@@ -116,6 +117,27 @@ $("#nav-container").on("click", ".band-btn", function() {
         displayDiscography();
     });
 
+    // play a song
+    queryURL = "https://api.soundcloud.com/tracks/?q=" + bandNameForSearch +
+     "&" + soundCloudClientID;
+
+      $.ajax({
+
+        method: "GET",
+        url: queryURL,
+
+    }).done(function(response) {
+
+        console.log(response);
+
+        for (var i = 0; i < response.length; i++) {
+
+            tracks[i] = response[i];
+        }
+
+        playTrack();
+    });  
+
     // stop current interval
     clearInterval(factInterval);
 
@@ -130,40 +152,41 @@ function getFact() {
     // check to be sure that fact is not empty...
     while(bandFacts[factIndex] === "" || bandFacts[factIndex].length > maxFactLength) {
 
-        // ...if it is, get another one
-        factIndex = Math.floor(Math.random() * bandFacts.length);
+    // ...if it is, get another one
+    factIndex = Math.floor(Math.random() * bandFacts.length);
     }
 
     $("#fun-facts").html("<p>" + bandFacts[factIndex] + "</p>");
 }
 
-function playVideo() {
-    
+function playTrack() {
+
+    $("#audioSource").attr("src", tracks[1].stream_url + "?" + soundCloudClientID);
+
+    var audioController = document.querySelector("#audioController");
+
+    audioController.load();
 }
 
 function displayDiscography() {
 
     $("#disc-container").html("");
-    
-    for(var i = 0; i < bandAlbums.length; i++) {
+
+    for(var i = 0; i < tracks.length; i++) {
 
         var newAlbumButton = $("<button>");
+        var newAlbumImage = $("<img>");
+
         newAlbumButton.attr("id", "album-button-" + i);
         newAlbumButton.addClass("button-primary album-button");
 
-        // var newButtonString = "";
+        newAlbumImage.attr("id", "album-image-" + i);
+        newAlbumImage.addClass("album-image");
 
-        // In case we want to display the year
-        // if(bandAlbums[i].year) {
-        //     newButtonString = bandAlbums[i].title + " (" + bandAlbums[i].year + ")";
-        // }
+        newAlbumImage.attr("src", tracks[i].artwork_url);
+        newAlbumButton.text(tracks[i].title);
 
-        // else {
-        //     newButtonString = bandAlbums[i].title;
-        // }
-
-        newAlbumButton.text(bandAlbums[i].title);
-
+        $("#disc-container").append(newAlbumImage);
         $("#disc-container").append(newAlbumButton);
     }
 }
