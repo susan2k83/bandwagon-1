@@ -13,12 +13,13 @@ var bandFacts2 = [];
 var bandAlbums = [];
 var tracks = [];
 
+var currentBand = {};
+
 var factInterval;
-var factIndex;
 
 buttonsAdded = 0;
 
-// firebase key array
+// firebase key array (if needed)
 var keys = [];
 
 // Firebase configuration & initialization
@@ -51,19 +52,19 @@ function getBandsFromFirebase() {
 
     database.ref("/BandWagon").on("value", function(snapshot) {
 
-        var i = 0;
+        var bandCounter = 0;
 
         snapshot.forEach(function(childSnapshot) {
 
-            keys[i] = childSnapshot.key;
+            // get keys in case we want to do something with them
+            keys[bandCounter] = childSnapshot.key;
 
-            bands[i] = childSnapshot.val();
-
-            i++;
+            // get band and increment counter
+            bands[bandCounter++] = childSnapshot.val();
         });
 
         writeButtons();
-        buttonsAdded =bands.length;
+        buttonsAdded = bands.length;
     });
 }
 
@@ -75,13 +76,14 @@ function writeButtons() {
 
     $("#nav-container").html("");
 
-    // write each button
+    // make a new button for each band and display on navbar
     for(var i = 0; i < bands.length; i++) {
 
         newBtn = $("<button>");
         newBtn.attr("id", "button-" + i);
         newBtn.addClass("button-primary band-btn");
         newBtn.text(bands[i]);
+
         $("#nav-container").append(newBtn);
     }
 }
@@ -92,7 +94,7 @@ function writeButtons() {
  */
 function getFact() {
 
-    factIndex = Math.floor(Math.random() * bandFacts2.length);
+    var factIndex = Math.floor(Math.random() * bandFacts2.length);
 
     // check to be sure that fact is not empty...
     while(bandFacts2[factIndex] === "") {
@@ -104,14 +106,14 @@ function getFact() {
     // if it's a long fact...
     if(bandFacts2[factIndex].length > maxFactLength) {
 
-        bandFacts2[factIndex] = bandFacts2[factIndex].substring(0, maxFactLength) + "...";
+        bandFacts2[factIndex] = bandFacts2[factIndex].substring(0, maxFactLength) + "..";
     }
 
     else {
-        bandFacts2[factIndex] = bandFacts2[factIndex].trim() + "."
+        bandFacts2[factIndex] = bandFacts2[factIndex].trim();
     }
 
-    $("#fun-facts").html("<p>" + bandFacts2[factIndex] + "</p>");
+    $("#fun-facts").html("<p>" + bandFacts2[factIndex] + ".</p>");
 }
 
 /*
@@ -281,8 +283,7 @@ $("#nav-container").on("click", ".band-btn", function() {
         getFact();
         
         // display random fact on an interval        
-        factInterval = setInterval(getFact, factIntervalLength);   
-
+        factInterval = setInterval(getFact, factIntervalLength);
     }); 
 });
 
