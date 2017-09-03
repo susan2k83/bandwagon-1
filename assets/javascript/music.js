@@ -110,3 +110,52 @@ function showPlayButton(){
 }
 
 showPlayButton();
+
+    // now get discography
+    // queryURL = "http://api.musicgraph.com/api/v2/album/search?api_key=30c6c15e149e566fdaa15b1d92b217f7&artist_name=" +
+    //              bandNameForSearch;
+    // $.ajax({
+
+    //     method: "GET",
+    //     url: queryURL,
+
+    // }).done(function(response) {
+
+    //     console.log(response);
+
+    //     for (var i = 0; i < response.data.length; i++) {
+
+    //         var tempAlbum = {title: response.data[i].title, year: response.data[i].release_year};
+
+    //         bandAlbums.push(tempAlbum);
+    //     }
+
+    //     displayDiscography();
+    // });
+
+    // get facts from wikipedia API
+    // queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" +
+    //             bandNameForSearch + "&limit=15&format=json";
+
+    // $.ajax({
+
+    //     method: "GET",
+    //     url: queryURL,
+    //     jsonp: "callback",
+    //     dataType: "jsonp",
+    //     xhrFields: {
+    //         withCredentials: true
+    //     }
+
+    // }).done(function(response) {
+
+    //     console.log(response);
+
+    //     // clear out the bandFacts array of any previous facts
+    //     bandFacts = [];
+
+    //     for (var i = 0; i < response[2].length; i++) {
+
+    //         bandFacts[i] = response[2][i];
+    //     }
+    // });
