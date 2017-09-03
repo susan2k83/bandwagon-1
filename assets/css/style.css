@@ -125,20 +125,48 @@ input {
 
 #fun-facts, #spotify {
 	padding: 10px;
+	padding-top: 0;
+}
+
+#spotify-header {
+	margin-bottom: 0;
+}
+
+#now-playing {
+	min-height: 40px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 0 5px;
+}
+
+#now-playing-image {
+	min-height: 100px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 #disc-container {
 	margin: 30px 0;
 	min-height: 100px;
 	padding: 10px;
+	text-align: center;
 	border: 2px solid black;
 	border-radius: 20px;
 	background-color: white;
 }
 
+
 .button-primary.album-button {
 	display: block;
 	clear: both;
 	margin: 0 auto;
+	margin-top: 5px;
 	margin-bottom: 5px;
+}
+
+.album-image {
+	display: block;
+	margin: 0 auto;
+	margin-top: 10px;
+	cursor: pointer;
 }
