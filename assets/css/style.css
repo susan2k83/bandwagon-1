@@ -155,8 +155,15 @@ input {
 	background-color: white;
 }
 
-
 .button-primary.album-button {
+	display: block;
+	clear: both;
+	margin: 0 auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.button-primary.search-term-btn {
 	display: block;
 	clear: both;
 	margin: 0 auto;
@@ -169,4 +176,27 @@ input {
 	margin: 0 auto;
 	margin-top: 10px;
 	cursor: pointer;
+}
+
+#search-terms-container {
+	position: relative;
+	margin: 0 auto;
+	width: 50%;
+}
+
+#search-terms {
+	position: absolute;
+	top: 70px;
+	z-index: 99;
+	display: none;
+	border: 2px solid black;
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 0px;
+	padding: 20px 0;
+	width: 100%;
+	text-align: center;
+	border-radius: 20px;
+	background-color: white;
+	color: black;
 }
