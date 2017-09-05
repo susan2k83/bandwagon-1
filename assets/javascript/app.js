@@ -2,22 +2,26 @@ const maxButtonDisplay = 5;
 const maxFactLength = 295;
 const factIntervalLength = 5000;
 
-var bandName;
+var searchTerms = [];
+var searchTermIndex;
+var firstFacts = [];
+
 var bandNameForSearch;
 var soundCloudClientID = "client_id=8538a1744a7fdaa59981232897501e04"
 var queryURL;
-var results;
 var bands = [];
-var bandFacts = [];
-var bandFacts2 = [];
-var bandAlbums = [];
-var tracks = [];
 
-var currentBand = {};
+var currentBand = {
+                    name: "",
+                    bandNameForSearch: "",
+                    facts: [],
+                    firstFact: "",
+                    tracks: []
+};
 
 var factInterval;
 
-buttonsAdded = 0;
+var buttonsAdded = 0;
 
 // firebase key array (if needed)
 var keys = [];
@@ -80,64 +84,36 @@ function writeButtons() {
     for(var i = 0; i < bands.length; i++) {
 
         newBtn = $("<button>");
-        newBtn.attr("id", "button-" + i);
+        newBtn.attr("data-index", i);
         newBtn.addClass("button-primary band-btn");
-        newBtn.text(bands[i]);
+        newBtn.text(bands[i].name);
 
         $("#nav-container").append(newBtn);
     }
 }
 
 /*
- * getFact()
- * get a random fact from the current bandFacts array
- */
-function getFact() {
-
-    var factIndex = Math.floor(Math.random() * bandFacts2.length);
-
-    // check to be sure that fact is not empty...
-    while(bandFacts2[factIndex] === "") {
-
-        // ...if it is, get another one
-        factIndex = Math.floor(Math.random() * bandFacts2.length);
-    }
-
-    // if it's a long fact...
-    if(bandFacts2[factIndex].length > maxFactLength) {
-
-        bandFacts2[factIndex] = bandFacts2[factIndex].substring(0, maxFactLength) + "..";
-    }
-
-    else {
-        bandFacts2[factIndex] = bandFacts2[factIndex].trim();
-    }
-
-    $("#fun-facts").html("<p>" + bandFacts2[factIndex] + ".</p>");
-}
-
-/*
  * playTrack(index)
- * Receives an index into tracks[] and changes the audio source attribute to the stream_url.
+ * Receives an index into currentBand.tracks[] and changes the audio source attribute to the stream_url.
  * Loads the song to autoplay.
  */
 function playTrack(index) {
 
-        $("#audioSource").attr("src", tracks[index].stream_url + "?" + soundCloudClientID);
+        $("#audioSource").attr("src", currentBand.tracks[index].stream_url + "?" + soundCloudClientID);
 
         var audioController = document.querySelector("#audioController");
 
         audioController.load();
 
-        $("#now-playing-image").attr("src", tracks[index].artwork_url);
-        $("#now-playing").html(tracks[index].title);
+        $("#now-playing-image").attr("src", currentBand.tracks[index].artwork_url);
+        $("#now-playing").html(currentBand.tracks[index].title);
 }
 
 function displayDiscography() {
 
     $("#discography").html("");
 
-    for(var i = 0; i < tracks.length; i++) {
+    for(var i = 0; i < currentBand.tracks.length; i++) {
 
         var newAlbumButton = $("<button>");
         var newAlbumImage = $("<img>");
@@ -148,18 +124,18 @@ function displayDiscography() {
         newAlbumImage.attr("data-index", i);
         newAlbumImage.addClass("album-image");
 
-        newAlbumImage.attr("src", tracks[i].artwork_url);
+        newAlbumImage.attr("src", currentBand.tracks[i].artwork_url);
 
         var testIndex = i;
         var imageTries = 1;
         
         // check to see if there is an image in artwork_url
-        while(!tracks[testIndex].artwork_url) {
+        while(!currentBand.tracks[testIndex].artwork_url) {
 
             // if not, try another track
 
             // but first, error check to see if next position exists
-            if(testIndex + 1 == tracks.length) {
+            if(testIndex + 1 == currentBand.tracks.length) {
 
                 // we're at end of array, check first position
                 testIndex = 0;
@@ -171,67 +147,24 @@ function displayDiscography() {
             }
 
             // try artwork_url at new location
-            newAlbumImage.attr("src", tracks[testIndex].artwork_url);
+            newAlbumImage.attr("src", currentBand.tracks[testIndex].artwork_url);
 
-            // copy new location url to tracks array
-            tracks[i].artwork_url = tracks[testIndex].artwork_url;
+            // copy new location url to currentBand.tracks array
+            currentBand.tracks[i].artwork_url = currentBand.tracks[testIndex].artwork_url;
         }
         
         // add track title to the button
-        newAlbumButton.text(tracks[i].title);
+        newAlbumButton.text(currentBand.tracks[i].title);
 
         $("#discography").append(newAlbumImage);
         $("#discography").append(newAlbumButton);
     }
 }
 
-// click listener for adding a band
-$("#add-band").on("click", function(event) {
+function getTracks() {
 
-    event.preventDefault();
-
-    // ignore duplicates & empty strings
-    if(!bands.includes($("#band-name").val()) && $("#band-name").val() != "") {
-
-        bandName = $("#band-name").val();
-    
-        bands.splice(buttonsAdded % maxButtonDisplay, 1, bandName);
-
-        writeButtons();
-
-        if(buttonsAdded < maxButtonDisplay) {
-            addBandToFirebase();
-        }
-
-        else {
-            buttonsAdded++;
-        }
-    }
-
-    // empty input field
-    $("#band-name").val("");
-});
-
-
-// event handler for band button click 
-$("#nav-container").on("click", ".band-btn", function() {
-
-    bandName = $(this).text().trim();
-
-    // handle spaces, capitalize next letter
-    if(bandName.includes(" ")) {
-
-        bandNameForSearch = bandName.replace(/ /g, "+");
-
-    }
-
-    else {
-        bandNameForSearch = bandName;
-    }
-
-    // get soundCloud track
-    queryURL = "https://api.soundcloud.com/tracks/?q=" + bandNameForSearch +
-     "&" + soundCloudClientID;
+    queryURL = "https://api.soundcloud.com/tracks/?q=" + currentBand.bandNameForSearch +
+                                                    "&" + soundCloudClientID;
 
       $.ajax({
 
@@ -243,48 +176,186 @@ $("#nav-container").on("click", ".band-btn", function() {
         console.log(response);
 
         // clear out tracks array of any previous tracks
-        tracks = [];
+        currentBand.tracks = [];
 
         for (var i = 0; i < response.length; i++) {
 
-            tracks[i] = response[i];
+            currentBand.tracks[i] = response[i];
         }
 
         displayDiscography();
     });  
+}
 
-    // get more facts from wiki
-    var moreFactsQueryURL = "https://en.wikipedia.org/w/api.php?action=query&" +
-        "&titles=" + bandNameForSearch + "&prop=extracts&exintro&explaintext&format=json"
+/*
+ * getFact()
+ * get a random fact from currentBand.facts array
+ */
+function displayFact() {
+
+    $("#fun-facts").html("");
+    var factIndex = Math.floor(Math.random() * currentBand.facts.length);
+
+    // check to be sure that fact is not empty...
+    while(currentBand.facts[factIndex] === "") {
+
+        // ...if it is, get another
+        factIndex = Math.floor(Math.random() * currentBand.facts.length);
+    }
+
+    // if it's a long fact...
+    if(currentBand.facts[factIndex].length > maxFactLength) {
+
+        currentBand.facts[factIndex] = currentBand.facts[factIndex].substring(0, maxFactLength) + "..";
+    }
+
+    else {
+        currentBand.facts[factIndex] = currentBand.facts[factIndex].trim();
+    }
+
+    $("#fun-facts").append("<p>" + currentBand.facts[factIndex] + ".</p>");
+}
+
+/*
+ * getFacts(index)
+ * call wikipedia API to get extract with 10 sentences (max allowed).
+ * then call again with 9 sentences and subtract the 9 from the 10, leaving one sentence.
+ * repeat until only one fact  
+ */
+function getFacts(index) {
+            
+    // clear out the bandFacts array of any previous facts
+    currentBand.facts = [];
+
+    queryURL = "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=" +
+                        "&explaintext=&titles=" + currentBand.bandNameForSearch;
 
     $.ajax({
 
         method: "GET",
-        url: moreFactsQueryURL,
+        url: queryURL,
         jsonp: "callback",
         dataType: "jsonp",
-        xhrFields: {
-            withCredentials: true
-        }
+        xhrFields: { withCredentials: true }
 
     }).done(function(response) {
 
         console.log(response.query.pages[Object.keys(response.query.pages)[0]].extract);
-        
-        // clear out the bandFacts2 array of any previous facts
-        bandFacts2 = [];
 
-        bandFacts2 = response.query.pages[Object.keys(response.query.pages)[0]].extract.split(".");
+        currentBand.facts = response.query.pages[Object.keys(response.query.pages)[0]].extract.split(".");
+
+        //     bandFacts[factCounter - 1] = response.query.pages[Object.keys(response.query.pages)[0]].extract
+        //                             .slice(bandFacts[factCounter - 2].length);
 
         // stop current interval
         clearInterval(factInterval);
 
         // display the first factoid
-        getFact();
+        $("#fun-facts").html("<p>" + currentBand.firstFact + "</p>");
         
         // display random fact on an interval        
-        factInterval = setInterval(getFact, factIntervalLength);
+        factInterval = setInterval(displayFact, factIntervalLength);
     }); 
+
+}
+
+function displaySearchTerm(index) {
+
+    newBtn = $("<button>");
+    newBtn.attr("data-index", index);
+    newBtn.addClass("button-primary search-term-btn");
+    newBtn.text(searchTerms[index]);
+
+    $("#search-terms").append(newBtn);
+}
+
+function displaySearchTerms() {
+
+    $("#search-terms").css("display", "block");
+    $("#search-terms").html("<h2>Select your search</h2>");
+
+    for(var i = 0; i < searchTerms.length; i++) {
+
+        displaySearchTerm(i);
+    }
+}
+
+// click listener for adding a band
+$("#add-band").on("click", function(event) {
+
+    event.preventDefault();
+
+    currentBand = [];
+
+    currentBand.name = $("#band-name").val();
+    $("#band-name").val("");
+
+    if(!Object.keys(bands).includes(currentBand.name) && currentBand.name != "") {
+    
+        queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&limit=5&format=json&search=" +
+                                            currentBand.name;
+
+        $.ajax({
+
+            method: "GET",
+            url: queryURL,
+            jsonp: "callback",
+            dataType: "jsonp",
+            xhrFields: { withCredentials: true }
+
+        }).done(function(response) {
+
+            console.log(response);
+
+            searchTerms = [];
+            firstFacts = [];
+
+            for(var i = 0; i < response[1].length; i++) {
+
+                searchTerms[i] = response[1][i];
+                firstFacts[i] = response[2][i];
+            }
+
+            console.log(searchTerms)
+
+            displaySearchTerms();
+        });
+    }
+
+});
+
+
+// event handler for search term button click 
+$("#search-terms").on("click", ".search-term-btn", function() {
+
+    event.preventDefault();
+
+    $("#search-terms").css("display", "none");
+    
+    currentBand.bandNameForSearch = searchTerms[$(this).attr("data-index")];
+    currentBand.firstFact = firstFacts[$(this).attr("data-index")];
+    currentBand.tracks = [];
+    currentBand.facts = [];
+    bands.splice(buttonsAdded % maxButtonDisplay, 1, currentBand);
+
+    writeButtons();
+
+    if(buttonsAdded < maxButtonDisplay) {
+        addBandToFirebase();
+    }
+
+    else {
+        buttonsAdded++;
+    }
+});
+
+// event handler for band button click 
+$("#nav-container").on("click", ".band-btn", function() {
+
+    currentBand = bands[$(this).attr("data-index")]; 
+
+    getTracks();
+    getFacts();
 });
 
 // event handler for band button click 

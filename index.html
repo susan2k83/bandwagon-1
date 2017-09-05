@@ -21,6 +21,10 @@
 
 <body>
     <div id="jumbotron" class="jumbotron">
+        <div id="search-terms-container">
+            <div id="search-terms" class="jumbotron">
+            </div>
+        </div>
 
         <h1 id="header"><img id="logo" src="assets/images/logo.png">BandWagon</h1>
         <!-- <h2 id="header-2"></h2> -->
@@ -31,7 +35,7 @@
                 <label id="label-band">Enter a Band/Artist</label>
                 <input id="band-name">
             </div>
-            <button id="add-band" type="submit" class="button-primary">Add Band</button>
+            <button id="add-band" type="submit" class="button-primary">Add</button>
         </form>
     </div>
     <nav id="nav">
@@ -103,7 +107,6 @@
     </div>
     <footer id="footer">
     </footer>
-
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
