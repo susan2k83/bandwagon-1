@@ -1,3 +1,8 @@
+// ONLY MAKE CHANGES IN THIS .SCSS FILE - NOT IN .CSS FILE!!
+
+$border-style: 2px solid black;
+$color-background-primary: white;
+
 body {
 	background-color: #eeeeee;
 }
@@ -17,9 +22,9 @@ body {
 	width: 960px;
 	max-width: 95%;
 	text-align: center;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 20px;
-	background-color: white;
+	background-color: $color-background-primary;
 	color: black;
 }
 
@@ -92,34 +97,34 @@ input {
 	text-align: center;
 	font-size: 12px;
 	height: 150px;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 100px;
-	background-color: white;
+	background-color: $color-background-primary;
 }
 
 #med-bubble {
 	width: 65px;
 	height: 65px;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 45px;
-	background-color: white;
+	background-color: $color-background-primary;
 }
 
 #sm-bubble {
 	width: 35px;
 	height: 35px;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 25px;
-	background-color: white;
+	background-color: $color-background-primary;
 }
 
 #spotify-container {
 	text-align: center;
 	font-size: 12px;
 	height: 250px;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 20px;
-	background-color: white;
+	background-color: $color-background-primary;
 }
 
 #fun-facts, #spotify {
@@ -130,9 +135,9 @@ input {
 	margin: 30px 0;
 	min-height: 100px;
 	padding: 10px;
-	border: 2px solid black;
+	border: $border-style;
 	border-radius: 20px;
-	background-color: white;
+	background-color: $color-background-primary;
 }
 
 .button-primary.album-button {

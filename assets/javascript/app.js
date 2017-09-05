@@ -1,11 +1,7 @@
-
-// GLOBAL VARIABLES - WIKIPEDIA
-
 // constants
 var maxButtonDisplay = 5;
 var maxFactLength = 215;
 var factIntervalLength = 5000;
-
 
 var bandName;
 var bandNameForSearch;
@@ -20,15 +16,10 @@ var tracks = [];
 var factInterval;
 var factIndex;
 
-
-// START - WIKIPEDIA API & AJAX CALL //
-$(document).on("click", "#add-band", function(event) {
-
 buttonsAdded = 0;
 
 // click listener for adding a band
 $("#add-band").on("click", function(event) {
-
 
     event.preventDefault();
 
@@ -67,6 +58,7 @@ function writeButtons() {
 $("#nav-container").on("click", ".band-btn", function() {
 
     bandName = $(this).text();
+
 
     // handle spaces
     if(bandName.includes(" ")) {
@@ -129,17 +121,6 @@ $("#nav-container").on("click", ".band-btn", function() {
     // play a song
     queryURL = "https://api.soundcloud.com/tracks/?q=" + bandNameForSearch +
      "&" + soundCloudClientID;
-
-
-    // factIndex = Math.floor(Math.random() * facts.length)  
-    // $("#fun-facts").html("<p>" + facts[factIndex] + "</p>");
-});
-// END - WIKIPEDIA API & AJAX CALL //
-
-// SPOTIFY API & AJAX CALL
-// $(document).ready(function () {
-    // var queryURL = 
-// });
 
       $.ajax({
 
@@ -210,4 +191,3 @@ function displayDiscography() {
         $("#disc-container").append(newAlbumButton);
     }
 }
-
