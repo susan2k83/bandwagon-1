@@ -38,11 +38,17 @@ form {
 	font-size: 16px;
 }
 
-input {
+#band-name {
 	float: right;
 	margin-bottom: 0px;
 	height: 36px;
 	width: 187px;
+	border: 1px solid #bbb;
+	border-radius: 4px;
+}
+
+#band-name:hover {
+	border: 1px solid #888;
 }
 
 #add-band {

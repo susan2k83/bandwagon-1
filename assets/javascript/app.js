@@ -1,4 +1,5 @@
 const maxButtonDisplay = 5;
+const maxFirstFactLength = 70;
 const maxFactLength = 295;
 const maxSentences = 10;
 const factIntervalLength = 5000;
@@ -316,7 +317,7 @@ function displaySearchTerm(index) {
     newBtn.text(searchTerms[index]);
 
     $("#search-terms").append(newBtn);
-    $("#search-terms").append("<p><i>" + firstFacts[index].slice(0,50) + "...</i></p>");
+    $("#search-terms").append("<p><i>" + firstFacts[index].slice(0,maxFirstFactLength) + "...</i></p>");
 }
 
 function displaySearchTerms() {
@@ -331,7 +332,7 @@ function displaySearchTerms() {
     newBtn.addClass("button search-term-btn");
     newBtn.text(searchTerms[0]);
     $("#search-terms").append(newBtn);
-    $("#search-terms").append("<p><i>" + firstFacts[0].slice(0,50) + "...</i></p>");
+    $("#search-terms").append("<p><i>" + firstFacts[0].slice(0,maxFirstFactLength) + "...</i></p>");
 
     $("#search-terms").append("<h5>Related Searches:</h5>");
 
