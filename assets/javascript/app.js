@@ -7,13 +7,6 @@ const factIntervalLength = 5000;
 var bands = [];
 var buttonsAdded = 0;
 
-var search = {  searchTerms: [],
-                firstFacts: [],
-                pageURLs: [] }
-
-var searchTermIndex;
-
-
 var soundCloudID = "8538a1744a7fdaa59981232897501e04"
 var queryURL;
 
@@ -37,6 +30,13 @@ var currentBand = {
                     tracks: [],
                     pageURL: ""
 };
+
+
+var openSearch = {  searchTerms: [],
+                firstFacts: [],
+                pageURLs: [] }
+
+var searchTermIndex;
 
 var factInterval;
 
@@ -99,12 +99,14 @@ function writeButtons() {
     // make a new button for each band and display on navbar
     for(var i = 0; i < bands.length; i++) {
 
-        newBtn = $("<button>");
-        newBtn.attr("data-index", i);
-        newBtn.addClass("button-primary band-btn");
-        newBtn.html(bands[i].name);
+        // newBtn = $("<button>");
+        // newBtn.attr("data-index", i);
+        // newBtn.addClass("button-primary band-btn");
+        // newBtn.html(bands[i].name);
 
-        $("#nav-container").append(newBtn);
+        $("#nav-container").append("<li class=\"btn-container\"><button data-index=\"" + i +
+            "\" class=\"button-primary band-btn\">" + bands[i].name +
+            "</button></li>");
     }
 }
 
@@ -128,6 +130,8 @@ function playTrack(index) {
 function displayDiscography() {
 
     $("#discography").html("<h4>\"" + currentBand.bandNameForSearch + "\"</h4>");
+    $("#discography").append("<h5><a href=\"" + currentBand.pageURL +
+                    "\" target=\"_blank\">click to open Wikipedia page</a></h5>");
 
     for(var i = 0; i < currentBand.tracks.length; i++) {
 
@@ -211,6 +215,7 @@ function displayFact() {
     var factIndex = Math.floor(Math.random() * (currentBand.facts.length - 1 - 1 + 1) + 1);
 
     var factCounter = 0
+
     // check to be sure that fact is not empty...
     while(currentBand.facts[factIndex] === "") {
 
@@ -319,10 +324,10 @@ function displaySearchTerm(index) {
     var newBtn = $("<button>");
     newBtn.attr("data-index", index);
     newBtn.addClass("button-primary search-term-btn");
-    newBtn.text(searchTerms[index]);
+    newBtn.text(openSearch.searchTerms[index]);
 
     $("#search-terms").append(newBtn);
-    $("#search-terms").append("<p><i>" + firstFacts[index].slice(0,maxFirstFactLength) + "...</i></p>");
+    $("#search-terms").append("<p><i>" + openSearch.firstFacts[index].slice(0,maxFirstFactLength) + "...</i></p>");
 }
 
 function displaySearchTerms() {
@@ -336,24 +341,23 @@ function displaySearchTerms() {
     var newBtn = $("<button>");
     newBtn.attr("data-index", 0);
     newBtn.addClass("button-primary search-term-btn");
-    newBtn.text(searchTerms[0]);
+    newBtn.text(openSearch.searchTerms[0]);
     $("#search-terms").append(newBtn);
-    $("#search-terms").append("<p><i>" + firstFacts[0].slice(0,maxFirstFactLength) + "...</i></p>");
+    $("#search-terms").append("<p><i>" + openSearch.firstFacts[0].slice(0,maxFirstFactLength) + "...</i></p>");
 
     $("#search-terms").append("<h5>Related Searches:</h5>");
 
-    for(var i = 1; i < searchTerms.length; i++) {
+    for(var i = 1; i < openSearch.searchTerms.length; i++) {
 
         displaySearchTerm(i);
     }
 
     newBtn = $("<button>");
     newBtn.attr("id", "cancel");
-    newBtn.addClass("button");
+    newBtn.addClass("button close-button");
     newBtn.text("cancel");
 
     $("#search-terms").append(newBtn);
-
 }
 
 // click listener for adding a band
@@ -361,37 +365,36 @@ $("#add-band").on("click", function(event) {
 
     event.preventDefault();
 
-    newBand = {};
-
-    newBand.name = $("#band-name").val().trim();
-    $("#band-name").val("");
-
     var bandExists = false;
 
     for(var i = 0; i < bands.length; i++) {
 
-        if(newBand.name === bands[i].name) {
+        if($("#band-name").val().trim().toUpperCase() === bands[i].name.toUpperCase()) {
 
             bandExists = true;
 
             $("#search-terms").css("display", "block");
             $("#search-terms").css("top", "65px");
-            $("#search-terms").html("<h5>Button Already Exists</h5>");
+            $("#search-terms").html("<h5>\"" + $("#band-name").val().trim() + "\" Already Exists</h5>");
 
             var newBtn = $("<button>");
             newBtn.attr("type", "submit")
             newBtn.attr("id", "try-again");
-            newBtn.addClass("button");
+            newBtn.addClass("button-primary close-button");
             newBtn.text("Try Again");
+
             $("#search-terms").append(newBtn);
         }
     }
 
-    if(!bandExists && newBand.name != "") {
+    // if the band doesn't already exist and input isn't empty
+    if(!bandExists && $("#band-name").val().trim() != "") {
+
+        newBand = {};    
+        newBand.name = $("#band-name").val().trim(); 
     
         queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&limit=5&format=json&search=" +
                                             newBand.name;
-
         $.ajax({
 
             method: "GET",
@@ -402,19 +405,22 @@ $("#add-band").on("click", function(event) {
 
         }).done(function(response) {
 
-            searchTerms = [];
-            firstFacts = [];
+            openSearch.searchTerms = [];
+            openSearch.firstFacts = [];
+            openSearch.pageURLs = [];
 
             for(var i = 0; i < response[1].length; i++) {
 
-                search.searchTerms[i] = response[1][i];
-                search.firstFacts[i] = response[2][i];
-                search.pageURLs[i] = response[3][i];
+                openSearch.searchTerms[i] = response[1][i];
+                openSearch.firstFacts[i] = response[2][i];
+                openSearch.pageURLs[i] = response[3][i];
             }
 
             displaySearchTerms();
         });
     }
+
+    $("#band-name").val("");
 });
 
 // event handler for search term button click 
@@ -424,9 +430,9 @@ $("#search-terms").on("click", ".search-term-btn", function(event) {
 
     $("#search-terms").css("display", "none");
     
-    newBand.bandNameForSearch = searchTerms[$(this).attr("data-index")];
-    newBand.firstFact = search.firstFacts[$(this).attr("data-index")];
-    newBand.firstFact = search.pageURLs[$(this).attr("data-index")];
+    newBand.bandNameForSearch = openSearch.searchTerms[$(this).attr("data-index")];
+    newBand.firstFact = openSearch.firstFacts[$(this).attr("data-index")];
+    newBand.pageURL = openSearch.pageURLs[$(this).attr("data-index")];
     newBand.tracks = [];
     newBand.facts = [];
     bands.splice(buttonsAdded % maxButtonDisplay, 1, newBand);
@@ -458,12 +464,14 @@ $("#disc-container").on("click", ".play-track", function() {
     playTrack($(this).attr("data-index"));
 });
 
-// event handler for band image click 
-// $("#disc-container").on("click", ".album-image", function() {
+// click listener to close modal
+$("#search-terms").on("click", ".close-button", function() {
 
-//     playTrack($(this).attr("data-index"));
-// });
+        // close modal
+        $("#search-terms").css("display", "none");
+});
 
+// esc key listener to close modal
 $(document).on("keyup", function(event) {
 
     if(event.which === 27) {
@@ -471,20 +479,4 @@ $(document).on("keyup", function(event) {
         // close modal
         $("#search-terms").css("display", "none");
     }
-});
-
-$("#search-terms").on("click", "#cancel", function(event) {
-
-        event.preventDefault();
-
-        // close modal
-        $("#search-terms").css("display", "none");
-});
-
-$("#search-terms").on("click", "#try-again", function(event) {
-
-        event.preventDefault();
-
-        // close modal
-        $("#search-terms").css("display", "none");
 });

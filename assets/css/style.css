@@ -1,5 +1,11 @@
+@font-face {
+    font-family: hippie_font;
+    src: local(hippie_font), url('../fonts/hippie.ttf') format('opentype');
+}
+
 body {
 	background-color: #eeeeee;
+	font-family: hippie_font;
 }
 
 #header {
@@ -15,7 +21,8 @@ body {
 	width: 960px;
 	max-width: 95%;
 	text-align: center;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
 	color: black;
@@ -74,11 +81,8 @@ h5 {
 	margin-bottom: 5px;
 }
 
-.button-primary.band-btn {
-	margin-left: 2.5px;
-	margin-right: 2.5px;
-	width: 187px;
-	max-width: 19.2%;
+button.button-primary.band-btn {
+	width: 100%;
 }
 
 #search-terms-container {
@@ -96,7 +100,8 @@ h5 {
 	top: -25px;
 	z-index: 99 !important;
 	display: none;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	margin: 0 auto;
 	margin-top: 30px;
 	margin-bottom: 0px;
@@ -113,19 +118,29 @@ h5 {
 	margin-bottom: 5px;
 	display: block;
 	clear: both;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
+}
+
+.button-primary {	
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 }
 
 #nav {
-	height: 50px;
+	background-color: transparent;
+  	border: none;
+	margin-bottom: 0px;
 }
 
 #nav-container {
 	margin: 0 auto;
 	width: 960px;
-	max-width: 100%;
+	max-width: 95%;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	height: 38px;
+	float: none;
 }
 
 .container {
@@ -140,7 +155,8 @@ h5 {
 	text-align: center;
 	font-size: 12px;
 	height: 150px;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 100px;
 	background-color: white;
 }
@@ -148,7 +164,9 @@ h5 {
 #med-bubble {
 	width: 65px;
 	height: 65px;
-	border: 2px solid black;
+	margin-top: 5px;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 45px;
 	background-color: white;
 }
@@ -156,7 +174,8 @@ h5 {
 #sm-bubble {
 	width: 35px;
 	height: 35px;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 25px;
 	background-color: white;
 }
@@ -165,7 +184,8 @@ h5 {
 	text-align: center;
 	font-size: 12px;
 	height: 250px;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
 }
@@ -197,7 +217,8 @@ h5 {
 	min-height: 100px;
 	padding: 10px;
 	text-align: center;
-	border: 2px solid black;
+	/*border: 2px solid black;*/
+	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
 }
@@ -216,6 +237,22 @@ h5 {
 	margin: 0 auto;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	box-shadow: 5px 5px 20px #37474f;
+}
+
+#disc-header, #discography h4, #discography h5 {
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+
+a:hover, a:focus {
+	text-decoration: none;
+	color: #1EAEDB;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: #33C3F0;
 }
 
 .album-image {
@@ -225,6 +262,10 @@ h5 {
 	cursor: pointer;
 }
 
+#now-playing-image {
+	width: 100px;
+}
+
 #cancel {
 	display: block;
 	clear: both;
@@ -232,3 +273,22 @@ h5 {
 	margin-top: 15px;
 	margin-bottom: 5px;
 }
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  height: 250px;
+}
+
+li.btn-container {
+	margin: 0 auto;
+	width: 100%;
+	/*width: 340px;*/
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+}
+
+@media screen and (min-width: 768px) {
+  li.btn-container {
+    max-width: 187px;
+    width: 20%;
+  }
