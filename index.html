@@ -33,12 +33,24 @@
                 <label id="label-band">Enter a Band/Artist</label>
                 <input id="band-name" autocomplete="off">
             </div>
-            <button id="add-band" type="submit" class="button">Add</button>
+            <button id="add-band" type="submit" class="button-primary">Add</button>
         </form>
     </div>
-    <nav id="nav">
-        <div id="nav-container">
-            <!-- band buttons get added here -->
+    <nav id="nav" class="navbar navbar-default">
+        <div id="navbar" class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <ul class="nav navbar-nav" id="nav-container">
+                    <!-- band buttons get added here -->
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -78,9 +90,8 @@
             <div class="col-md-6 col-sm-6">
                 <div id="spotify-container">
                     <h3 id="spotify-header">Play SoundCloud</h3>
-                        <img id="now-playing-image" src="">
+                        <img id="now-playing-image" src="assets/images/soundcloud-logo.jpg">
                         <p id="now-playing">
-                            <!-- populated dynamically: image and title -->
                         </p>
                     <div id="player">
                         <audio id="audioController" controls="controls" autoplay="true">
