@@ -235,3 +235,18 @@ h5 {
 	margin-top: 15px;
 	margin-bottom: 5px;
 }
+
+li.btn-container  {
+	width: 100%;
+	margin-left: 2.5px;
+	margin-right: 2.5px;
+  }
+  
+  
+  
+  @media screen and (min-width: 960px) {
+	li.btn-container {
+	  max-width: 187px;
+	  width: 20%;
+	}
+  }

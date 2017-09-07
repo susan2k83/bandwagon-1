@@ -59,29 +59,18 @@ input {
   margin-bottom: 10px;
 }
 
-
 /* .button {
   margin-bottom: 0px;
 } */
 
 button.button-primary.band-btn {
-  max-width: 187px;
   width: 100%;
-  /* margin-left: 2.5px; */
-  /* margin-right: 2.5px; */
 }
 
 #nav {
   background-color: transparent;
   border: none;
   margin-bottom: 0px;
-}
-
-li.btn-container {
-  margin-left: 2.5px;
-  margin-right: 2.5px;
-  max-width: 187px;
-  width: 20%;
 }
 
 #nav-container {
@@ -151,6 +140,27 @@ li.btn-container {
   clear: both;
   margin: 0 auto;
   margin-bottom: 5px;
+}
+
+/* WHEN COLLAPSED, NO MID-SCROLL BAR WILL APPEAR */
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  height: 170px;
+}
+
+/* CONTAINER THAT HOLDS ALL THE PRE-LOADED BUTTONS */
+li.btn-container {
+  width: 100%;
+  /* margin-left: 2.5px; */
+  /* margin-right: 2.5px; */
+}
+
+/* SETTINGS FOR BUTTONS BEFORE THE HAMBURGER BUTTON APPEARS */
+@media screen and (min-width: 768px) {
+  li.btn-container {
+    max-width: 187px;
+    width: 20%;
+  }
 }
 
 
