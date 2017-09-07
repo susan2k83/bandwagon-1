@@ -88,7 +88,9 @@ function writeButtons() {
         newBtn.addClass("button-primary band-btn");
         newBtn.text(bands[i].name);
 
-        $("#nav-container").append(newBtn);
+        $("#nav-container").append("<li class=\"btn-container\"><button data-index=\"" + i +
+            "\" class=\"button-primary band-btn\">" + bands[i].name +
+            "</button></li>");
     }
 }
 
