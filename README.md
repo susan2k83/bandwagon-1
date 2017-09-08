@@ -10,3 +10,11 @@ The general concept is that users select a musical band or artist and view relat
 We use Firebase to store 5 presets.  Users can add bands/artists and they are added to the navbar buttons, overwriting presets, but just for their session.  The original pre-sets are refreshed on page load.
 
 Future functionality may be to tie into Spotify so that we can access a larger collection of tracks and display complete discographies of each band or artist.
+
+https://mstange22.github.io/project-1/
+
+https://en.wikipedia.org/w/api.php?action=opensearch&search=adele&limit=5&format=json
+
+https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exsentences=10&explaintext=&titles=adele
+
+https://docs.google.com/presentation/d/1m95uYn8OoCRmqkiVSBa5rjTtUPRIi0w0g-tjgLbzgHg/edit#slide=id.g2602dd88ee_0_964
