@@ -39,6 +39,7 @@ var openSearch = {  searchTerms: [],
 var searchTermIndex;
 
 var factInterval;
+var factIndex = 0;
 
 // firebase key array (if needed)
 var keys = [];
@@ -206,23 +207,26 @@ function getTracks() {
 }
 
 /*
- * getFact()
+ * displayFact()
  * get a random fact from currentBand.facts array
  */
 function displayFact() {
 
     $("#fun-facts").html("");
-    var factIndex = Math.floor(Math.random() * (currentBand.facts.length - 1 - 1 + 1) + 1);
+    factIndex++;
+    factIndex = factIndex % currentBand.facts.length;
 
     var factCounter = 0
 
     // check to be sure that fact is not empty...
     while(currentBand.facts[factIndex] === "") {
 
-        factIndex = Math.floor(Math.random() * (currentBand.facts.length - 1 - 1 + 1) + 1);
+        factIndex++;
+        factIndex = factIndex % currentBand.facts.length;
         factCounter++
 
         if(factCounter > 9) {
+
             // error...facts array is empty
             $("#fun-facts").append("<p>There are no facts to display for this search term.</p>");
             break;
@@ -286,7 +290,8 @@ function getSentences(index) {
 
                 if( currentBand.facts[i].endsWith("Bros.") ||
                     currentBand.facts[i].endsWith("Dr.") ||
-                    currentBand.facts[i].endsWith("Rev.")) {
+                    currentBand.facts[i].endsWith("Rev.") ||
+                    currentBand.facts[i].endsWith("Jr.")) {
 
                     currentBand.facts[i] += " ";
                     currentBand.facts[i] += currentBand.facts[i + 1];
