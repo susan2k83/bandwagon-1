@@ -334,7 +334,7 @@ function displaySearchTerms() {
 
     $("#search-terms").css("display", "block");
     $("#search-terms").css("top", "-25px");
-    $("#search-terms").html("<h3 id=\"search-header\">Refine your search</h3>");
+    $("#search-terms").html("<h3 id=\"search-header\">Refine Your Search</h3>");
 
     $("#search-terms").append("<h5>Closest Wiki Search:</h5>");
 
@@ -369,7 +369,7 @@ $("#add-band").on("click", function(event) {
 
     for(var i = 0; i < bands.length; i++) {
 
-        if($("#band-name").val().trim().toUpperCase() === bands[i].name.toUpperCase()) {
+        if($("#input-band-name").val().trim().toUpperCase() === bands[i].name.toUpperCase()) {
 
             bandExists = true;
 
@@ -388,10 +388,10 @@ $("#add-band").on("click", function(event) {
     }
 
     // if the band doesn't already exist and input isn't empty
-    if(!bandExists && $("#band-name").val().trim() != "") {
+    if(!bandExists && $("#input-band-name").val().trim() != "") {
 
         newBand = {};    
-        newBand.name = $("#band-name").val().trim(); 
+        newBand.name = $("#input-band-name").val().trim(); 
     
         queryURL = "https://en.wikipedia.org/w/api.php?action=opensearch&limit=5&format=json&search=" +
                                             newBand.name;
@@ -420,7 +420,7 @@ $("#add-band").on("click", function(event) {
         });
     }
 
-    $("#band-name").val("");
+    $("#input-band-name").val("");
 });
 
 // event handler for search term button click 
