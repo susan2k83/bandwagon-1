@@ -1,11 +1,5 @@
-@font-face {
-    font-family: hippie_font;
-    src: local(hippie_font), url('../fonts/hippie.ttf') format('opentype');
-}
-
 body {
 	background-color: #eeeeee;
-	font-family: hippie_font;
 }
 
 #header {
@@ -21,7 +15,6 @@ body {
 	width: 960px;
 	max-width: 95%;
 	text-align: center;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
@@ -45,7 +38,7 @@ form {
 	font-size: 16px;
 }
 
-#band-name {
+#input-band-name {
 	float: right;
 	margin-bottom: 0px;
 	height: 36px;
@@ -54,7 +47,7 @@ form {
 	border-radius: 4px;
 }
 
-#band-name:hover {
+#input-band-name:hover {
 	border: 1px solid #888;
 }
 
@@ -83,6 +76,7 @@ h5 {
 
 button.button-primary.band-btn {
 	width: 100%;
+	margin-bottom: 5px;
 }
 
 #search-terms-container {
@@ -100,7 +94,6 @@ button.button-primary.band-btn {
 	top: -25px;
 	z-index: 99 !important;
 	display: none;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	margin: 0 auto;
 	margin-top: 30px;
@@ -118,12 +111,10 @@ button.button-primary.band-btn {
 	margin-bottom: 5px;
 	display: block;
 	clear: both;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 }
 
-.button-primary {	
-	/*border: 2px solid black;*/
+.button-primary {
 	box-shadow: 5px 5px 20px #37474f;
 }
 
@@ -155,7 +146,6 @@ button.button-primary.band-btn {
 	text-align: center;
 	font-size: 12px;
 	height: 150px;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 100px;
 	background-color: white;
@@ -165,7 +155,6 @@ button.button-primary.band-btn {
 	width: 65px;
 	height: 65px;
 	margin-top: 5px;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 45px;
 	background-color: white;
@@ -174,7 +163,6 @@ button.button-primary.band-btn {
 #sm-bubble {
 	width: 35px;
 	height: 35px;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 25px;
 	background-color: white;
@@ -184,7 +172,6 @@ button.button-primary.band-btn {
 	text-align: center;
 	font-size: 12px;
 	height: 250px;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
@@ -217,7 +204,6 @@ button.button-primary.band-btn {
 	min-height: 100px;
 	padding: 10px;
 	text-align: center;
-	/*border: 2px solid black;*/
 	box-shadow: 5px 5px 20px #37474f;
 	border-radius: 20px;
 	background-color: white;
@@ -282,13 +268,25 @@ a, a:visited {
 li.btn-container {
 	margin: 0 auto;
 	width: 100%;
-	/*width: 340px;*/
 	margin-left: 2.5px;
 	margin-right: 2.5px;
 }
 
 @media screen and (min-width: 768px) {
+  
   li.btn-container {
     max-width: 187px;
     width: 20%;
   }
+}
+
+
+@media screen and (max-width: 768px) {
+
+	button.button-primary.band-btn {
+		display: block;
+		margin: auto;
+		width: 340px;
+		margin-bottom: 5px;
+	}
+}
