@@ -374,13 +374,14 @@ $("#add-band").on("click", function(event) {
 
     for(var i = 0; i < bands.length; i++) {
 
-        if($("#input-band-name").val().trim().toUpperCase() === bands[i].name.toUpperCase()) {
+        if( $("#input-band-name").val().trim().toUpperCase() === bands[i].name.toUpperCase() ||
+            $("#input-band-name").val().trim().toUpperCase() === bands[i].bandNameForSearch.toUpperCase()) {
 
             bandExists = true;
 
             $("#search-terms").css("display", "block");
             $("#search-terms").css("top", "65px");
-            $("#search-terms").html("<h5>\"" + $("#band-name").val().trim() + "\" Already Exists</h5>");
+            $("#search-terms").html("<h5>\"" + $("#input-band-name").val().trim() + "\" Already Exists</h5>");
 
             var newBtn = $("<button>");
             newBtn.attr("type", "submit")
