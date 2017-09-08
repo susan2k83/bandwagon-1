@@ -1,5 +1,6 @@
 # project-1
 First Group Project - BandWagon
+
 Deployed site: https://mstange22.github.io/project-1/
 
 This is our first group project.  Requirements were to build an app, using data from at least 2 APIs.  We chose Wikipedia and SoudCloud.
