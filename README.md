@@ -1,9 +1,9 @@
 # project-1
-First Group Project - BandWagon
+Group Project - BandWagon
 
 Deployed site: https://mstange22.github.io/project-1/
 
-This is our first group project.  Requirements included building an app using data from 2 APIs.  We chose Wikipedia and SoudCloud.
+Requirements included building an app using data from 2 APIs.  We chose Wikipedia and SoudCloud.  Use a technology not yet presented in class materials.  We used Skeleton for the CSS framework.  Polished front end.  Check!  Error checking / input validation?  It's pretty robust.  Good coding standards: indentation, scoping, naming.  I think we're good there.  No pop-up "alerts", "prompts", or confirms.  Check out our modals!  Mobile responsive. 
 
 The general concept is that users select a musical band or artist and view related facts and listen to SoundCloud tracks.
 
