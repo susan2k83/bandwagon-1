@@ -46,15 +46,16 @@ var keys = [];
 
 // Firebase configuration & initialization
 var config = {
-    apiKey: "AIzaSyAiexV0rlMuaZQbv-wTHO3Cj5arNwsXIw4",
-    authDomain: "first-project-171de.firebaseapp.com",
-    databaseURL: "https://first-project-171de.firebaseio.com",
-    projectId: "first-project-171de",
-    storageBucket: "first-project-171de.appspot.com",
-    messagingSenderId: "949949647628"
-};
+    apiKey: "AIzaSyATTsI8OY744jY8k6aOn_yGQ1CKFNbwCmw",
+    authDomain: "train-time-20d46.firebaseapp.com",
+    databaseURL: "https://train-time-20d46.firebaseio.com",
+    projectId: "train-time-20d46",
+    storageBucket: "train-time-20d46.appspot.com",
+    messagingSenderId: "974248781663"
+  };
+  firebase.initializeApp(config);
 
-firebase.initializeApp(config);
+
 var database = firebase.database();
 
 getBandsFromFirebase();
