@@ -1,7 +1,7 @@
 # project-1
 Group Project - BandWagon
 
-Deployed site: https://mstange22.github.io/bandwagon
+Deployed site: https://susan2k83.github.io/bandwagon-1/
 
 Requirements included building an app using data from 2 APIs.  We chose Wikipedia and SoudCloud.  We also needed to use a technology not yet presented in our boot camp, so we used Skeleton for buttons and font.  Bootstrap is still the main framework (grid system, navbar & jumbotrons).  Polished front end?  Check!  Error checking / input validation?  It's pretty robust.  Good coding standards: indentation, scoping, naming.  I think we're good there.  No pop-up "alerts", "prompts", or confirms.  Check out our modals!  We're mobile responsive, too.
 
